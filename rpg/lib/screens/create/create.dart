@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:rpg/models/character.dart';
 import 'package:rpg/models/vocation.dart';
 import 'package:rpg/screens/create/vocation_card.dart';
 import 'package:rpg/screens/home/home.dart';
+import 'package:rpg/services/character_store.dart';
 import 'package:rpg/shared/styled_button.dart';
 import 'package:rpg/shared/styled_text.dart';
 import 'package:rpg/theme.dart';
@@ -11,14 +13,14 @@ import 'package:uuid/uuid.dart';
 
 var uuid = const Uuid();
 
-class Create extends StatefulWidget {
-  const Create({super.key});
+class CreateScreen extends StatefulWidget {
+  const CreateScreen({super.key});
 
   @override
-  State<Create> createState() => _CreateState();
+  State<CreateScreen> createState() => _CreateState();
 }
 
-class _CreateState extends State<Create> {
+class _CreateState extends State<CreateScreen> {
 
   final _nameController = TextEditingController();
   final _sloganController = TextEditingController();
@@ -82,10 +84,17 @@ class _CreateState extends State<Create> {
         } );
       return;
     }
-    characters.add(Character(name: _nameController.text.trim(), slogan: _sloganController.text.trim(), vocation: selectedVocation, id: uuid.v4() ));
+    //dummy data removed!
+    //characters.add(Character(name: _nameController.text.trim(), slogan: _sloganController.text.trim(), vocation: selectedVocation, id: uuid.v4() ));
 
-    Navigator.push(context, MaterialPageRoute(builder: (ctx)=> const Home()));
-  }
+    Provider.of<CharacterStore>(context, listen: false)
+      .addCharacter(Character(
+        name: _nameController.text.trim(), 
+        slogan: _sloganController.text.trim(), 
+        vocation: selectedVocation, 
+        id: uuid.v4() ));
+      Navigator.push(context, MaterialPageRoute(builder: (ctx)=> const Home()));
+    }
 
   @override
   Widget build(BuildContext context) {
