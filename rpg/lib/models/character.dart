@@ -18,7 +18,7 @@ class Character with Stats{
   bool _isFav = false;
 
   // getters
-  bool get inFav => _isFav;
+  bool get isFav => _isFav;
 
   void toggleIsFav() {
     _isFav = !_isFav;
@@ -70,6 +70,8 @@ class Character with Stats{
     if (data['isFav'] == true){
       character.toggleIsFav();
     }
+    // asing stats & points
+    character.setStats(points: data['points'], stats: data['stats']);
 
     return character;
   }

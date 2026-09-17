@@ -14,6 +14,13 @@ class Home extends StatefulWidget {
 }
 
 class _HomeState extends State<Home> {
+  // fetch data from Firestore
+  @override
+  void initState() {
+    Provider.of<CharacterStore>(context, listen: false).fetchCharactersOnce();
+    
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -32,7 +39,13 @@ class _HomeState extends State<Home> {
               return ListView.builder(
                 itemCount: value.characters.length,
                 itemBuilder: (_, index) {
-                  return CharacterCard(value.characters[index]);
+                  return Dismissible(
+                    key: ValueKey(value.characters[index].id),
+                    onDismissed: (direction) {
+                      Provider.of<CharacterStore>(context, listen: false).removeCharacter(value.characters[index]);
+                    } ,
+                    child: CharacterCard(value.characters[index])
+                    );
                   },
                 );
               }
