@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:rpg/models/character.dart';
+import 'package:rpg/screens/profile/heart.dart';
 import 'package:rpg/screens/profile/skill_list.dart';
 import 'package:rpg/screens/profile/stats_table.dart';
 import 'package:rpg/services/character_store.dart';
@@ -23,29 +24,43 @@ class Profile extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             // basic info
-            Container(
-              padding: const EdgeInsets.all(16), 
-            color: AppColors.secondaryColor.withValues(alpha: 0.3),
-            child: Row(
+            Stack(
               children: [
-                Image.asset('assets/img/vocations/${character.vocation.image}',
-                width: 140,
-                height: 140,),
-                const SizedBox(width: 20),
-                Expanded(
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      StyledHeading(character.vocation.title),
-                      StyledText(character.vocation.description),
-                    ],
+                Container(
+                  padding: const EdgeInsets.all(16), 
+                color: AppColors.secondaryColor.withValues(alpha: 0.3),
+                child: Row(
+                  children: [
+                    Hero(
+                      tag:  character.id.toString(),
+                      child: Image.asset('assets/img/vocations/${character.vocation.image}',
+                      width: 140,
+                      height: 140,),
+                    ),
+                    const SizedBox(width: 20),
+                    Expanded(
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          StyledHeading(character.vocation.title),
+                          StyledText(character.vocation.description),
+                        ],
+                      ),
+                    )
+                
+                  ]
+                  
+                ),
+                ),
+                Positioned(
+                  top: 10,
+                  right: 10,
+                  child: Heart(character: character),
                   ),
-                )
+              ],
+            ),
+            
 
-              ]
-              
-            ),
-            ),
             //weapon, ability and slogan
             const SizedBox(height: 20,),
             Center(child: Icon(Icons.code, color: AppColors.primaryColor,)),
