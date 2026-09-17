@@ -44,6 +44,14 @@
             "request": "launch",
             "type": "dart",
             "flutterMode": "release"
-        }
+        },
+        {
+            "name": "forms",
+            "cwd": "flutter-forms-tutorial-starter-project",
+            "request": "launch",
+            "type": "dart"
+        },
+
+
     ]
 }
